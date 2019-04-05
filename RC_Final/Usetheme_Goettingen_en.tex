@@ -1,0 +1,376 @@
+\documentclass[hyperref={pdfpagelabels=true}]{beamer}
+%\usepackage{etex} % Math fonts misbehave
+\usepackage{lmodern} 
+%\usefonttheme{structurebold}
+
+\usepackage{gauss}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{lipsum}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{setspace}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{ragged2e}
+\usepackage{mathrsfs}
+\usepackage{bbold}
+\usepackage[all]{xy}
+
+\setbeamertemplate{footline}[frame number]
+\setbeamercolor{normal text}{bg=white!10}
+\setbeamertemplate{theorems}[numbered]
+
+\newcommand{\C}{\mathbb{C}} \newcommand{\F}{\mathbb{F}} \newcommand{\R}{\mathbb{R}} \newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\newcommand{\U}{\mathrm}
+\newcommand{\celsius}{\ensuremath{^{\circ}\mathrm{C}}}
+\newcommand{\myseries}[2]{#1_1,\ldots,#1_{#2}}
+\newcommand{\highlightr}[1]{\textcolor[rgb]{1,0.3,0.2}{\emph{\textbf{#1}}}}
+\newcommand{\highlightg}[1]{\textcolor[rgb]{0.1,0.5,0.3}{\emph{\textbf{#1}}}}
+\newcommand{\structb}[1]{\textcolor[rgb]{0.2,0.2,0.7}{#1}}
+\newcommand{\bemph}[1]{\emph{\textbf{#1}}}
+\newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}
+
+
+\renewcommand\arraystretch{1.8}
+
+
+\title{Honors Mathematics \uppercase\expandafter{\romannumeral4}\\Final Review}
+\author{CHEN Xiwen} 
+\date{\today} 
+\institute[UM-JI]{UM-SJTU Joint Institute}
+
+
+\AtBeginSubsection[]{
+\begin{frame}
+\tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded]
+\end{frame}
+}
+
+\begin{document}
+
+
+
+\begin{frame}
+\titlepage
+\end{frame} 
+
+
+\begin{frame}
+\frametitle{Table of contents}
+\tableofcontents
+\end{frame} 
+
+
+\section{Separation of Variables for PDEs}
+
+
+\subsection{Uniqueness of Solution}
+
+
+\begin{frame}{Uniqueness of Solution}
+
+\justifying
+\structb{Example 1.} Prove the uniqueness of solution of the three dimensional wave on $\Omega\subset\R^3$
+\begin{align*}
+c^2u_{tt} = \Delta u
+\end{align*}
+which satisfy the boundary conditions
+\begin{align*}
+u(x, y, z, t) = F(x, y, z, t), \qquad (x, y, z)\in \partial \Omega
+\end{align*}
+and initial conditions
+\begin{align*}
+u(x, y, z, 0) = G(x, y, z), \qquad u_t(x, y, z, 0) = H(x, y, z).
+\end{align*}
+\highlightr{Hint.} Green's identity
+\begin{align*}
+\int_{\Omega}\langle \nabla u, \nabla v\rangle d\tau = -\int_{\Omega} u\cdot\Delta v d\tau + \int_{\partial \Omega^*} u\frac{\partial v}{\partial n}dA.
+\end{align*}
+
+\end{frame}
+
+
+\subsection{Solving PDEs}
+
+\begin{frame}{Separation of Variables for PDEs}
+
+\begin{enumerate}
+	\justifying
+	\item Make ansatz
+	$$u(x_1, \ldots, x_n) = u_1(x_1)\cdot u_2(x_2)\cdots u_n(x_n).$$
+	\item Write out the boundary conditions with the ansatz. (Usually this will reduce to initial conditions for the ODE with only one variable.)
+	\item Solve the ODEs one-by-one. (Begin with the one that has boundary conditions.)
+	\begin{itemize}
+		\justifying
+		\item Obtain ODE in the form $Lu = \lambda u$ with boundary condition.
+		\item Solve this ODE and obtain eigenvalues \& eigenfunctions.
+		\item Plug in these eigenvalues to solve other equations.
+	\end{itemize}
+	\item Gather all the eigenfunctions for each variable to obtain the general solution of the PDE.
+	\item Fit the general solution into the initial conditions.
+	\begin{itemize}
+		\justifying
+		\item The eigenfunctions for one ODE normally form an orthonormal system. (Usually Fourier series or Bessel functions.)
+		\item Expand the initial condition with this orthonormal system.
+	\end{itemize}
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}{Orthonormal Systems}
+
+\justifying
+\structb{Fitting initial conditions.} There are (most commonly) two series that we can expand the initial conditions to. On the interval $[0, L]$, we have
+\begin{itemize}
+\justifying
+\item Fourier series (usually cosine or sine series).
+\begin{align*}
+\left\{\frac{1}{\sqrt{L}}, \sqrt{\frac{2}{L}}\cos\left(\frac{\pi nx}{L} \right) \right\}^{\infty}_{n=1}, \quad \left\{\sqrt{\frac{2}{L}}\sin\left(\frac{\pi nx}{L} \right) \right\}^{\infty}_{n=1}.
+\end{align*}
+\item Bessel functions. Expand the initial condition into
+\begin{align*}
+\left\{\frac{1}{\sqrt{L}|J'_n(\alpha_{n, m})|} J_n(\alpha_{n, m}\sqrt{x/L}) \right\}_{m=1}^{\infty}
+\end{align*}
+so that
+$$f(x) = \sum_{m=1}^{\infty}\frac{1}{L\cdot J'_n(\alpha_{n, m})^2}\langle J_n(\alpha_{n, m}\sqrt{(\cdot)/L}), f\rangle J_n(\alpha_{n, m}\sqrt{x/L}).$$
+\end{itemize}
+
+\end{frame}
+
+
+\subsection{Sturm-Liouville Problems Derived from PDE}
+
+
+\begin{frame}{Inhomogeneous PDEs}
+
+\justifying
+\begin{block}{}
+	\justifying
+	\structb{Step 2.} \highlightg{Solve the ODEs one-by-one. (Begin with the one that has boundary conditions.)} 
+\end{block}
+
+\begin{block}{}
+	\structb{Example 2.} Solve the inhomogeneous heat equation
+	\begin{align*}
+	u_{xx} - u_t = -2x, \qquad (x, t)\in (0, 1)\times \R_{+}
+	\end{align*}
+	with Dirichlet boundary conditions
+	\begin{align*}
+	u(0, t) = 0, \qquad u(1, t) = 0, \qquad t > 0
+	\end{align*}
+	and initial temperature distribution
+	\begin{align*}
+	u(x, 0) = x - x^2, \qquad x\in [0, 1].
+	\end{align*}
+	
+\end{block}
+
+\end{frame}
+
+
+
+
+\subsection{Orthogonality of Eigenfunctions}
+
+
+
+\begin{frame}{Orthogonality of Eigenfunctions}
+
+\begin{block}{}
+	\justifying
+	\structb{Step 3.} \highlightg{Solve this ODE and obtain eigenvalues \& eigenfunctions.}
+\end{block}
+\begin{block}{}
+	\justifying
+	The choice of basis largely depends on the eigenfunctions obtained from the Sturm-Liouville problem.
+\end{block}
+
+
+\end{frame}
+
+
+
+
+\begin{frame}{Mixed Boundary Conditions}
+
+\justifying
+\begin{block}{}
+	\justifying
+	\structb{Step 3.} \highlightg{Solve this ODE and obtain eigenvalues \& eigenfunctions.}
+\end{block}
+\begin{block}{}
+	\structb{Example 3.} Show how a solution to the heat equation
+	\begin{align*}
+	u_{xx} - u_t = 0, \qquad (x, t)\in (0, 1)\times \R_{+}
+	\end{align*}
+	with mixed boundary conditions
+	\begin{align*}
+	u(0, t) = 0,\qquad u_x(1, t) = 0, \qquad t>0
+	\end{align*}
+	and initial temperature distribution
+	\begin{align*}
+	u(x, 0) = f(x), \qquad x\in [0, 1]
+	\end{align*}
+	can be obtained.
+\end{block}
+
+
+\end{frame}
+
+
+
+
+
+\begin{frame}{Orthogonality of Eigenfunctions}
+
+\begin{block}{}
+	\justifying
+	\structb{Step 3.} \highlightg{Solve this ODE and obtain eigenvalues \& eigenfunctions.}
+\end{block}
+\begin{block}{}
+	\structb{Example 4 (RC 9).} Solve the wave equation problem
+	\begin{align*}
+	4u_{tt} & = u_{xx}, \\
+	u_x(-\pi, t) & = u_x(\pi, t) = 0, \quad u(x, 0) = x^2, \quad u_t(x, 0) = 0.
+	\end{align*}
+	The basis is chosen as
+	\begin{align*}
+	\left\{\frac{1}{\sqrt{2\pi}}, \frac{1}{\sqrt{\pi}}\cos(nx), \frac{1}{\sqrt{\pi}}\sin\left(\left(n - \frac{1}{2} \right)x \right) \right\}_{n=1}^{\infty}.
+	\end{align*}
+\end{block}
+
+
+\end{frame}
+
+
+\begin{frame}{Orthogonality of Eigenfunctions}
+
+\begin{block}{}
+	\justifying
+	\structb{Step 3.} \highlightg{Solve this ODE and obtain eigenvalues \& eigenfunctions.}
+\end{block}
+\begin{block}{}
+	\justifying
+	\structb{Example 5.} The Sturm-Liouville problem can have various forms deciding the eigenfunctions.
+	\begin{itemize}
+		\item Wave equation $c^2 u_{xx} = u_{tt}, 0 < x < l, t > 0$ gives two ODEs
+		\begin{align*}
+		X'' + \lambda X = 0,\qquad T'' + \lambda c^2 T = 0.
+		\end{align*}
+		\item The equation for the suspended chain $u_{tt} = g\cdot xu_x$ yields
+		\begin{align*}
+		(xX')' + \lambda X = 0\quad\Rightarrow \quad y^2Y'' + yY' + \lambda y^2Y = 0, \\
+		T'' + \lambda gT = 0.
+		\end{align*}
+	\end{itemize}
+\end{block}
+
+
+\end{frame}
+
+
+
+
+
+\subsection{Fit into Initial Conditions}
+
+\begin{frame}{Fit into Initial Conditions}
+
+\begin{block}{}
+	\justifying
+	\structb{Step 5.} \highlightg{Fit the general solution into the initial conditions.}
+\end{block}
+
+\begin{block}{}
+	\justifying
+	Expand the initial condition using the orthonormal system formed by the eigenfunctions.
+\end{block}
+
+
+
+
+\end{frame}
+
+
+
+\begin{frame}{Fit into Initial Conditions}
+
+The Fourier series for $L^2([0, L])$:
+\begin{itemize}
+	\item \structb{The Fourier-Euler Basis.}
+	$$
+	\mathcal{B}_1 := \left\{\frac{1}{\sqrt{L}}, \sqrt{\frac{2}{L}}\cos\left(\frac{2\pi nx}{L} \right), \sqrt{\frac{2}{L}}\sin\left(\frac{2\pi nx}{L} \right) \right\}^{\infty}_{n=1}
+	$$
+	\item \structb{The Fourier-Cosine Basis.}
+	$$
+	\mathcal{B}_2 := \left\{\frac{1}{\sqrt{L}}, \sqrt{\frac{2}{L}}\cos\left(\frac{\pi nx}{L} \right) \right\}^{\infty}_{n=1}
+	$$
+	\item \structb{The Fourier-Sine Basis.}
+	$$
+	\mathcal{B}_3 := \left\{\sqrt{\frac{2}{L}}\sin\left(\frac{\pi nx}{L} \right) \right\}^{\infty}_{n=1}
+	$$
+\end{itemize}
+
+
+\end{frame}
+
+
+
+\begin{frame}{Fit into Initial Conditions}
+
+\begin{block}{}
+	\begin{itemize}
+		\item \structb{The complex Fourier-Euler Basis.}
+		$$
+		\mathcal{B}_{\mathcal{F}} = \left\{\frac{1}{\sqrt{2L}} e^{inx\pi/L} \right\}_{n=-\infty}^{\infty}
+		$$
+		\item\structb{The Bessel Functions.}
+		\begin{align*}
+		\left\{\frac{1}{\sqrt{L}|J'_n(\alpha_{n, m})|} J_n(\alpha_{n, m}\sqrt{x/L}) \right\}_{m=1}^{\infty}
+		\end{align*}
+	\end{itemize}
+\end{block}
+
+
+\end{frame}
+
+
+
+
+
+\section{Final Remarks}
+
+
+\begin{frame}{Final Remarks}
+
+
+\begin{itemize}
+	\justifying
+	\item The choice of eigenvalues need to be discussed in order to satisfy the boundary conditions.
+	\item Scale the basis functions according to the length of the interval.
+	\item The expression of eigenfunctions can be either as sine/cosine functions or exponential functions. CHOOSE SMARTLY :)
+\end{itemize}
+
+
+\end{frame}
+
+
+
+
+\begin{frame}{}
+  
+  \centering
+  \highlightr{Good luck for your Final!}
+  
+  
+\end{frame}
+
+\end{document}
+
+
